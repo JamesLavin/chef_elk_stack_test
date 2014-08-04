@@ -10,7 +10,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "base"
+  config.vm.box = "chef/ubuntu-13.10"
+  config.berkshelf.enabled = true
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -85,17 +86,24 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
   # path, and data_bags path (all relative to this Vagrantfile), and adding
   # some recipes and/or roles.
-  #
-  # config.vm.provision "chef_solo" do |chef|
+
+  config.omnibus.chef_version = :latest
+
+  config.vm.provision "chef_solo" do |chef|
   #   chef.cookbooks_path = "../my-recipes/cookbooks"
   #   chef.roles_path = "../my-recipes/roles"
   #   chef.data_bags_path = "../my-recipes/data_bags"
-  #   chef.add_recipe "mysql"
+     chef.add_recipe "apt"
+     chef.add_recipe "java"
   #   chef.add_role "web"
   #
-  #   # You may also specify custom JSON attributes:
-  #   chef.json = { mysql_password: "foo" }
-  # end
+     # You may also specify custom JSON attributes:
+     chef.json = {
+                   "java" => {
+                     "jdk_version" => "7"
+                   }
+                 }
+  end
 
   # Enable provisioning with chef server, specifying the chef server URL,
   # and the path to the validation key (relative to this Vagrantfile).

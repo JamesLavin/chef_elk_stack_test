@@ -21,7 +21,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 8090, host: 8090
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -61,7 +62,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # path, and data_bags path (all relative to this Vagrantfile), and adding
   # some recipes and/or roles.
   #
-  # Info: https://docs.vagrantup.com/v2/provisioning/chef_solo.html
+  # Info:
+  #   https://docs.vagrantup.com/v2/provisioning/chef_common.html
+  #   https://docs.vagrantup.com/v2/provisioning/chef_solo.html
 
   config.omnibus.chef_version = :latest
 
@@ -72,8 +75,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      chef.add_recipe "apt"
      chef.add_recipe "java"
      chef.add_recipe "elasticsearch"
+     chef.add_recipe "nginx"
      chef.add_recipe "logstash"
-     #chef.add_recipe "kibana"
+     chef.add_recipe "kibana::install"
   #   chef.add_role "web"
   #
      # You may also specify custom JSON attributes:

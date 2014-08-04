@@ -21,8 +21,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
+
+  # Nginx
   config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # Nginx status
   config.vm.network "forwarded_port", guest: 8090, host: 8090
+
+  # ElasticSearch (This is just for testing purposes; remove when Kibana configured)
+  config.vm.network "forwarded_port", guest: 9200, host: 9200
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -72,16 +79,34 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   chef.cookbooks_path = "../my-recipes/cookbooks"
   #   chef.roles_path = "../my-recipes/roles"
   #   chef.data_bags_path = "../my-recipes/data_bags"
+
+     # https://github.com/opscode-cookbooks/apt
      chef.add_recipe "apt"
+    
+     # https://github.com/opscode-cookbooks/vim
+     chef.add_recipe "vim"
+
+     # https://github.com/agileorbit-cookbooks/java
      chef.add_recipe "java"
+
+     # https://github.com/elasticsearch/cookbook-elasticsearch
      chef.add_recipe "elasticsearch"
-     chef.add_recipe "nginx"
-     chef.add_recipe "logstash"
+
+     # https://github.com/miketheman/nginx
+     #chef.add_recipe "nginx"
+
+
+     #chef.add_recipe "logstash::server"
+     #chef.add_recipe "logstash::agent"
+
+     # https://github.com/lusis/chef-kibana
      chef.add_recipe "kibana::install"
+
   #   chef.add_role "web"
   #
      # You may also specify custom JSON attributes:
      chef.json = {
+                   "name" => "elasticsearch_test_elk",
                    "java" => {
                      "jdk_version" => "7"
                    },
@@ -89,6 +114,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                      "cluster" => {
                        "name" => "elasticsearch_test_elk"
                      }
+                   },
+                   "kibana" => {
+                     #"webserver" => "nginx"
+                   #},
+                   #"logstash" => {
+                   #  "server" => {
+                   #    "enabled" => true
+                   #  }
                    }
                  }
   end

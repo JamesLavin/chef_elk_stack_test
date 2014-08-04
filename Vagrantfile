@@ -81,7 +81,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                    "java" => {
                      "jdk_version" => "7"
                    },
-                   "elasticsearch": {
+                   "elasticsearch" => {
                      "cluster" => {
                        "name" => "elasticsearch_test_elk"
                      }

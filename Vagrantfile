@@ -77,7 +77,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "chef_solo" do |chef|
   #   chef.cookbooks_path = "../my-recipes/cookbooks"
-  #   chef.roles_path = "../my-recipes/roles"
+     chef.roles_path = "./roles"
   #   chef.data_bags_path = "../my-recipes/data_bags"
 
      # https://github.com/opscode-cookbooks/apt
@@ -95,12 +95,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      # https://github.com/miketheman/nginx
      #chef.add_recipe "nginx"
 
-
-     #chef.add_recipe "logstash::server"
-     #chef.add_recipe "logstash::agent"
-
      # https://github.com/lusis/chef-kibana
      chef.add_recipe "kibana::install"
+
+     chef.add_role "logstash_server"
+     #chef.add_recipe "logstash::server"
+     #chef.add_recipe "logstash::agent"
 
   #   chef.add_role "web"
   #
@@ -117,10 +117,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                    },
                    "kibana" => {
                      #"webserver" => "nginx"
-                   #},
-                   #"logstash" => {
+                   },
+                   "logstash" => {
                    #  "server" => {
                    #    "enabled" => true
+                     #},
+                     "instance" => {
+                       "name" => "default"
+                     #},
+                     #"input" => {
+                     #  "file" =>  {
+                     #    "path" => "/home/vagrant/server_logs",
+                     #    "type" => 
+                       }
                    #  }
                    }
                  }

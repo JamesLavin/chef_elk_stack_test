@@ -90,34 +90,36 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      chef.add_recipe "java"
 
      # https://github.com/elasticsearch/cookbook-elasticsearch
-     chef.add_recipe "elasticsearch"
+     #chef.add_recipe "elasticsearch"
 
      # https://github.com/miketheman/nginx
      #chef.add_recipe "nginx"
 
      # https://github.com/lusis/chef-kibana
-     chef.add_recipe "kibana::install"
+     #chef.add_recipe "kibana::install"
 
-     chef.add_role "logstash_server"
-     #chef.add_recipe "logstash::server"
-     #chef.add_recipe "logstash::agent"
+     #chef.add_role "elasticsearch_server"
+     #chef.add_role "logstash_server"
+     chef.add_recipe "logstash::server"
+     chef.add_recipe "logstash::agent"
+     chef.add_recipe "logstash::kibana"
 
   #   chef.add_role "web"
   #
      # You may also specify custom JSON attributes:
      chef.json = {
-                   "name" => "elasticsearch_test_elk",
+                   #"name" => "elasticsearch_test_elk",
                    "java" => {
                      "jdk_version" => "7"
                    },
-                   "elasticsearch" => {
-                     "cluster" => {
-                       "name" => "elasticsearch_test_elk"
-                     }
-                   },
-                   "kibana" => {
+                   #"elasticsearch" => {
+                   #  "cluster" => {
+                   #    "name" => "elasticsearch_test_elk"
+                   #  }
+                   #},
+                   #"kibana" => {
                      #"webserver" => "nginx"
-                   },
+                   #},
                    "logstash" => {
                    #  "server" => {
                    #    "enabled" => true
@@ -129,8 +131,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                      #  "file" =>  {
                      #    "path" => "/home/vagrant/server_logs",
                      #    "type" => 
-                       }
-                   #  }
+                     #  }
+                     }
                    }
                  }
   end

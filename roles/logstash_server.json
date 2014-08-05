@@ -1,0 +1,11 @@
+{
+  "name": "logstash_server",
+  "description": "Attributes and run_lists for Logstash instance",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "run_list": [
+    "recipe[logstash::agent]",
+    "recipe[logstash::server]",
+    "recipe[logstash::kibana]"
+  ]
+}
